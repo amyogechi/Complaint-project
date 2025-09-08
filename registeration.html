@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registeration Complaint System</title>
+  <style>
+    body {
+      background-color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      background-color: white;
+      box-shadow: 0.2px 0.5px 1px 1px gray;
+      margin-top:30px;
+      width: 39%;
+      height: 580px;
+      color: black;
+      border-radius: 10px;
+    }
+
+    .logo {
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo img {
+      border-radius: 50%;
+      width: 70px;
+      height: 70px;
+    }
+
+    header {
+      margin: 20px 10px;
+      display: block;
+      text-align: center;
+    }
+
+    .header {
+      font-size: 23px;
+      font-weight: bold;
+    }
+
+    h4 {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 10px;
+      font-size: 17px;
+      font-weight: lighter;
+      text-transform: uppercase;
+    }
+
+
+    .form-container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .label {
+      font-size: 16px;
+      font-weight: bolder;
+      align-items: baseline;
+    }
+    .form-container .Names{
+      display: flex;
+    }
+     .form-container input{
+     width: 410px;
+     border-radius: 5px;
+     margin-bottom: 20px;
+      margin-top: 7px;
+    border:0.1px solid hsla(0, 0%, 50%, 0.338);
+     /* background-color: hsla(120, 93%, 79%, 0.086); */
+     padding: 6px;
+     height:25px;
+    }
+    .form-container .Names input{
+    width: 200px;
+     border-radius: 5px;
+     margin-bottom: 20px;
+     margin-top: 7px;
+     margin-right: 10px;
+     border:0.1px solid hsla(0, 0%, 50%, 0.338);
+     padding: 6px;
+     height:25px;
+    }
+    .passwords{
+      display: flex;
+    }
+    .form-container .passwords input{
+      width: 200px;
+     border-radius: 5px;
+     margin-bottom: 20px;
+     margin-top: 7px;
+     margin-right: 10px;
+     border:0.1px solid hsla(0, 0%, 50%, 0.338);
+     padding: 6px;
+     height:25px;
+    }
+    .reg-btn {
+      width: 60px;
+      height: 30px;
+      background-color: green;
+      color: white;
+      border-radius: 5px;
+      border: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="logo"><span><img src="/Projectwork/download (1).jpeg" alt=""></span></div>
+    <header><span class="header">NACOS Complaint Management system</span></header>
+    <h4>Registration</h4>
+    <div class="form-container">
+      <form action="">
+        <div class="Names">
+          <div>
+            <div class="label"><label for="name">First Name</label></div>
+            <input type="text" placeholder="Enter Firstname" required>
+          </div>
+          <div>
+             <div class="label"><label for="name">Last Name</label></div>
+            <input type="text" placeholder="Enter Lastname" required>
+          </div>
+        </div>
+        <div class="label"><label for="name">Registration No</label></div>
+        <div>
+          <input type="text" placeholder="Enter Registeration No" required>
+        </div>
+        <div class="label"><label for="name">Email</label></div>
+        <div>
+          <input type="text" placeholder="Enter Email Address" required>
+        </div>
+       
+        <div class="passwords"><div>
+           <div class="label"><label for="password">Password</label></div>
+          <input type="password" placeholder="Enter password" required>
+        </div>
+        <div>
+           <div class="label"><label for="password">Comfirm Password</label></div>
+          <input type="password" required>
+        </div></div>
+        <button class="reg-btn ">Register</button>
+      </form>
+    </div>
+  </div>
+</body>
+
+</html>

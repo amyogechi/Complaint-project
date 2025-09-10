@@ -64,7 +64,7 @@
      border-radius: 5px;
      margin-bottom: 20px;
       margin-top: 7px;
-     border:0.1px solid hsla(0, 0%, 50%, 0.194);
+     border:0.1px solid hsla(0, 0%, 50%, 0.338);
      /* background-color: hsla(120, 93%, 79%, 0.086); */
      padding: 6px;
      height:25px;
@@ -88,6 +88,16 @@
       text-decoration: none;
       color: green;
     }
+    .password-container {
+      position: relative;
+    }
+     .password-container span {
+      position: absolute;
+      right:10px;
+      top: 40%;
+      transform: translateY(-50%);
+      cursor: pointer;
+    }
     
   </style>
 </head>
@@ -103,13 +113,40 @@
         <input type="text" placeholder="Username" required>
       </div>
       <div class="label"><label for="password">Password</label></div>
-      <div>
-        <input type="password" placeholder="password" required>
+      <div class="password-container">
+        <input type="password" placeholder="password" id="password" required>
+        <span onclick="togglePassword()" style="cursor:pointer;">👁️</span>
       </div>
-     <button class="sub-btn">SUBMIT</button>
+     <button class="sub-btn" onclick="loginSuccess()">SUBMIT</button>
       <div><p>Not registered? <a href="registeration.html">Register</a></p></div>
     </form>
    </div>
   </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
+  <script>
+    function togglePassword() {  
+  let password = document.getElementById("password");
+  if (password.type === "password") {
+  password.type = "text";   
+ } else {
+  password.type = "password"; 
+ }
+ }
+
+//  SweetAlert success popup
+ function loginSuccess() {
+  Swal.fire({
+    icon: "success",
+    title: "Login Successful",
+    text: "Redirecting to your Complaint Form...",
+    timer: 2000,
+    showConfirmButton: false
+  }).then(() => {
+  window.location.href = "complaintform.html";
+  });
+}
+  </script>
+
 </body>
-</html>
+</html> 

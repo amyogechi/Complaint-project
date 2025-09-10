@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Complaint Form</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    body {
+      background-color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      background-color: white;
+      box-shadow: 0.2px 0.5px 1px 1px gray;
+      margin-top: 30px;
+      width: 45%;
+      min-height: 650px;
+      color: black;
+      border-radius: 10px;
+      padding: 10px;
+    }
+
+    .logo {
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo img {
+      border-radius: 50%;
+      width: 70px;
+      height: 70px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .header {
+      font-size: 23px;
+      font-weight: bold;
+    }
+
+    header h4 {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 16px;
+      font-weight: lighter;
+      text-transform: uppercase;
+      color: gray;
+    }
+
+    .form-container {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .form-container label {
+      font-size: 15px;
+      font-weight: bold;
+      display: block;
+      margin-top: 10px;
+    }
+
+    .form-container input,
+    .form-container textarea {
+      width: 100%;
+      border-radius: 5px;
+      margin-top: 7px;
+      margin-bottom: 18px;
+      border: 0.1px solid hsla(0, 0%, 50%, 0.338);
+      padding: 8px;
+      font-size: 14px;
+    }
+
+    textarea {
+      resize: none;
+    }
+
+    .submit-btn {
+      width: 120px;
+      height: 35px;
+      background-color: green;
+      color: white;
+      border-radius: 5px;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 15px;
+      /* transition: background 0.3s ease; */
+    }
+
+    .submit-btn:hover {
+      background-color: darkgreen;
+    }
+
+    .error {
+      color: red;
+      font-size: 12px;
+      margin-top: -12px;
+      margin-bottom: 10px;
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="logo"><span><img src="/Projectwork/download (1).jpeg" alt=""></span></div>
+    <header>
+      <div class="header">Complaint Form</div>
+      <h4>Submit your complaint</h4>
+    </header>
+    <div class="form-container">
+      <form id="complaintForm">
+
+        <label for="name">Full Name</label>
+        <input type="text" id="name" placeholder="Enter your full name">
+        <small id="nameError" class="error">Name is required</small><br>
+
+        <label for="matric">Matric Number</label>
+        <input type="text" id="matric" placeholder="Enter matric number">
+        <small id="matricError" class="error">Matric number is required</small><br>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="Enter Email">
+        <small id="emailError" class="error">Enter a valid email</small><br>
+
+        <label for="department">Department</label>
+        <input type="text" id="department" placeholder="Enter Department">
+        <small id="deptError" class="error">Department is required</small><br>
+
+        <label for="title">Complaint Title</label>
+        <input type="text" id="title" placeholder="Title of your complaint">
+        <small id="titleError" class="error">Complaint title is required</small><br>
+
+        <label for="details">Complaint Details</label>
+        <textarea id="details" placeholder="Describe your complaint..." rows="5"></textarea>
+        <small id="detailsError" class="error">Details must be at least 20 characters</small>
+
+        <label for="file">Attachment (optional)</label>
+        <input type="file" id="file">
+
+        <button type="submit" class="submit-btn">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    //  elements Variables
+    const form = document.getElementById("complaintForm");
+    const nameField = document.getElementById("name");
+    const matricField = document.getElementById("matric");
+    const emailField = document.getElementById("email");
+    const deptField = document.getElementById("department");
+    const titleField = document.getElementById("title");
+    const detailsField = document.getElementById("details");
+
+    // Error fields
+    const nameError = document.getElementById("nameError");
+    const matricError = document.getElementById("matricError");
+    const emailError = document.getElementById("emailError");
+    const deptError = document.getElementById("deptError");
+    const titleError = document.getElementById("titleError");
+    const detailsError = document.getElementById("detailsError");
+
+    // Validation functions
+    function validateName() {
+      if (nameField.value.trim() === "") {
+        nameError.style.display = "block";
+        return false;
+      } else {
+        nameError.style.display = "none";
+        return true;
+      }
+    }
+
+    function validateMatric() {
+      var regno = /^[A-Za-z0-9]+\/[A-Za-z0-9]+$/;
+      if (!matricField.value.match(regno)) {
+        matricError.style.display = "block";
+        return false;
+      } else {
+        matricError.style.display = "none";
+        return true;
+      }
+    }
+
+    function validateEmail() {
+      var emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,}$/;
+      if (!emailField.value.match(emailPattern)) {
+        emailError.style.display = "block";
+        return false;
+      } else {
+        emailError.style.display = "none";
+        return true;
+      }
+    }
+
+    function validateDept() {
+      if (deptField.value === "") {
+        deptError.style.display = "block";
+        return false;
+      } else {
+        deptError.style.display = "none";
+        return true;
+      }
+    }
+
+    function validateTitle() {
+      if (titleField.value.trim() === "") {
+        titleError.style.display = "block";
+        return false;
+      } else {
+        titleError.style.display = "none";
+        return true;
+      }
+    }
+
+    function validateDetails() {
+      if (detailsField.value.trim().length < 20) {
+        detailsError.style.display = "block";
+        return false;
+      } else {
+        detailsError.style.display = "none";
+        return true;
+      }
+    }
+
+    // Real-time validation
+    nameField.addEventListener("input", validateName);
+    matricField.addEventListener("input", validateMatric);
+    emailField.addEventListener("input", validateEmail);
+    deptField.addEventListener("input", validateDept);
+    titleField.addEventListener("input", validateTitle);
+    detailsField.addEventListener("input", validateDetails);
+
+
+    // On form submit
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      // Run all validations
+      var isValid =
+        validateName() &&
+        validateMatric() &&
+        validateEmail() &&
+        validateDept() &&
+        validateTitle() &&
+        validateDetails();
+
+      if (isValid) {
+        Swal.fire({
+          icon: "success",
+          title: "Complaint Submitted",
+          text: "Thank you! Your complaint has been recorded.",
+          timer: 2500,
+          showConfirmButton: false
+        });
+
+        form.reset(); // clear fields
+      }
+      else {
+        Swal.fire({
+          icon: "error",
+          title: "Form Incomplete",
+          text: "Please fix the errors before submitting."
+        });
+      }
+    });
+
+  </script>
+
+</body>
+
+</html>

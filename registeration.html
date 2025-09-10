@@ -16,7 +16,7 @@
     .container {
       background-color: white;
       box-shadow: 0.2px 0.5px 1px 1px gray;
-      margin-top:30px;
+      margin-top: 30px;
       width: 39%;
       height: 580px;
       color: black;
@@ -70,42 +70,48 @@
       font-weight: bolder;
       align-items: baseline;
     }
-    .form-container .Names{
+
+    .form-container .Names {
       display: flex;
     }
-     .form-container input{
-     width: 410px;
-     border-radius: 5px;
-     margin-bottom: 20px;
+
+    .form-container input {
+      width: 410px;
+      border-radius: 5px;
+      margin-bottom: 20px;
       margin-top: 7px;
-    border:0.1px solid hsla(0, 0%, 50%, 0.338);
-     /* background-color: hsla(120, 93%, 79%, 0.086); */
-     padding: 6px;
-     height:25px;
+      border: 0.1px solid hsla(0, 0%, 50%, 0.338);
+      /* background-color: hsla(120, 93%, 79%, 0.086); */
+      padding: 6px;
+      height: 25px;
     }
-    .form-container .Names input{
-    width: 200px;
-     border-radius: 5px;
-     margin-bottom: 20px;
-     margin-top: 7px;
-     margin-right: 10px;
-     border:0.1px solid hsla(0, 0%, 50%, 0.338);
-     padding: 6px;
-     height:25px;
+
+    .form-container .Names input {
+      width: 200px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      margin-top: 7px;
+      margin-right: 10px;
+      border: 0.1px solid hsla(0, 0%, 50%, 0.338);
+      padding: 6px;
+      height: 25px;
     }
-    .passwords{
+
+    .passwords {
       display: flex;
     }
-    .form-container .passwords input{
+
+    .form-container .passwords input {
       width: 200px;
-     border-radius: 5px;
-     margin-bottom: 20px;
-     margin-top: 7px;
-     margin-right: 10px;
-     border:0.1px solid hsla(0, 0%, 50%, 0.338);
-     padding: 6px;
-     height:25px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      margin-top: 7px;
+      margin-right: 10px;
+      border: 0.1px solid hsla(0, 0%, 50%, 0.338);
+      padding: 6px;
+      height: 25px;
     }
+
     .reg-btn {
       width: 60px;
       height: 30px;
@@ -114,6 +120,12 @@
       border-radius: 5px;
       border: none;
     }
+    .error {
+  color: green;
+  font-size: 14px;   
+  transform: translateY(-15px);
+  position: absolute;
+  }
   </style>
 </head>
 
@@ -130,7 +142,7 @@
             <input type="text" placeholder="Enter Firstname" required>
           </div>
           <div>
-             <div class="label"><label for="name">Last Name</label></div>
+            <div class="label"><label for="name">Last Name</label></div>
             <input type="text" placeholder="Enter Lastname" required>
           </div>
         </div>
@@ -139,22 +151,46 @@
           <input type="text" placeholder="Enter Registeration No" required>
         </div>
         <div class="label"><label for="name">Email</label></div>
-        <div>
-          <input type="text" placeholder="Enter Email Address" required>
+        <div class="email">
+          <input type="email" id="email" placeholder="Enter Email" required>
         </div>
-       
-        <div class="passwords"><div>
-           <div class="label"><label for="password">Password</label></div>
-          <input type="password" placeholder="Enter password" required>
+         <div class="error" id="emailError">Please enter a valid email</div>
+
+        <div class="passwords">
+          <div>
+            <div class="label"><label for="password">Password</label></div>
+            <input type="password" placeholder="Enter password" required>
+          </div>
+          <div>
+            <div class="label"><label for="password">Comfirm Password</label></div>
+            <input type="password" required>
+          </div>
         </div>
-        <div>
-           <div class="label"><label for="password">Comfirm Password</label></div>
-          <input type="password" required>
-        </div></div>
         <button class="reg-btn ">Register</button>
       </form>
     </div>
   </div>
+
+  <script>
+ // Validate email
+    var email = document.getElementById("email");
+    var emailError = document.getElementById("emailError");
+
+    function validateEmail() {
+      var emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,}$/;
+      if (!email.value.match(emailPattern)) {
+        emailError.style.display = "block"; 
+        return false;
+      } else {
+        emailError.style.display = "none"; 
+        return true;
+      }
+    }
+ // check as the user types
+    email.addEventListener("input", function() {
+      validateEmail();
+    });
+  </script>
 </body>
 
 </html>

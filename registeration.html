@@ -5,29 +5,28 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Registeration Complaint System</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
     body {
-      background-color: white;
+      background-color: #f9f9f9;
       display: flex;
       justify-content: center;
       align-items: center;
+      height: auto;
     }
 
     .container {
       background-color: white;
-      box-shadow: 0.2px 0.5px 1px 1px gray;
-      margin-top: 30px;
-      width: 39%;
-      height: 580px;
-      color: black;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      padding: 30px;
+      width: 420px;
+      /* margin-top: 20px; */
       border-radius: 10px;
     }
 
     .logo {
-      margin-top: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      text-align: center;
+      margin-bottom: 15px;
     }
 
     .logo img {
@@ -37,160 +36,280 @@
     }
 
     header {
-      margin: 20px 10px;
-      display: block;
       text-align: center;
+      margin-bottom: 20px;
     }
 
-    .header {
-      font-size: 23px;
+    header h2 {
+      font-size: 22px;
       font-weight: bold;
+      margin: 0;
     }
 
-    h4 {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    header p {
+      font-size: 14px;
+      color: gray;
+      margin-top: 5px;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
       margin-top: 10px;
-      font-size: 17px;
-      font-weight: lighter;
-      text-transform: uppercase;
     }
 
-
-    .form-container {
+    input {
       width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .label {
-      font-size: 16px;
-      font-weight: bolder;
-      align-items: baseline;
-    }
-
-    .form-container .Names {
-      display: flex;
-    }
-
-    .form-container input {
-      width: 410px;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
       border-radius: 5px;
-      margin-bottom: 20px;
-      margin-top: 7px;
-      border: 0.1px solid hsla(0, 0%, 50%, 0.338);
-      /* background-color: hsla(120, 93%, 79%, 0.086); */
-      padding: 6px;
-      height: 25px;
+      font-size: 14px;
     }
 
-    .form-container .Names input {
-      width: 200px;
-      border-radius: 5px;
-      margin-bottom: 20px;
-      margin-top: 7px;
-      margin-right: 10px;
-      border: 0.1px solid hsla(0, 0%, 50%, 0.338);
-      padding: 6px;
-      height: 25px;
+    .password-container {
+      position: relative;
     }
 
-    .passwords {
-      display: flex;
+    .password-container input {
+      width: 100%;
     }
 
-    .form-container .passwords input {
-      width: 200px;
-      border-radius: 5px;
-      margin-bottom: 20px;
-      margin-top: 7px;
-      margin-right: 10px;
-      border: 0.1px solid hsla(0, 0%, 50%, 0.338);
-      padding: 6px;
-      height: 25px;
+    .password-container .eye {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
     }
 
-    .reg-btn {
-      width: 60px;
-      height: 30px;
-      background-color: green;
-      color: white;
-      border-radius: 5px;
-      border: none;
-    }
+
     .error {
-  color: green;
-  font-size: 14px;   
-  transform: translateY(-15px);
-  position: absolute;
-  }
+      color: red;
+      font-size: 12px;
+      display: none;
+    }
+
+    .form-row {
+      display: flex;
+      margin-bottom: 15px;
+    }
+
+    .btn {
+      width: 40%;
+      background-color: darkgreen;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      margin-top: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .btn-container {
+      display: flex;
+    }
+     .btn-direction {
+      display: flex;
+      justify-content: end;
+      
+    }
+      .btn-direction p{
+         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.257);
+    }
+     .btn-direction a{
+        text-decoration: none;
+        color: green;
+    }
+
+    .btn:hover {
+      background-color: green;
+    }
   </style>
 </head>
 
 <body>
   <div class="container">
     <div class="logo"><span><img src="/Projectwork/download (1).jpeg" alt=""></span></div>
-    <header><span class="header">NACOS Complaint Management system</span></header>
-    <h4>Registration</h4>
-    <div class="form-container">
-      <form action="">
-        <div class="Names">
-          <div>
-            <div class="label"><label for="name">First Name</label></div>
-            <input type="text" placeholder="Enter Firstname" required>
-          </div>
-          <div>
-            <div class="label"><label for="name">Last Name</label></div>
-            <input type="text" placeholder="Enter Lastname" required>
-          </div>
-        </div>
-        <div class="label"><label for="name">Registration No</label></div>
-        <div>
-          <input type="text" placeholder="Enter Registeration No" required>
-        </div>
-        <div class="label"><label for="name">Email</label></div>
-        <div class="email">
-          <input type="email" id="email" placeholder="Enter Email" required>
-        </div>
-         <div class="error" id="emailError">Please enter a valid email</div>
+    <header>
+      <h2>NACOS Complaint Management system</h2>
+      <p>Registration</p>
+    </header>
 
-        <div class="passwords">
-          <div>
-            <div class="label"><label for="password">Password</label></div>
-            <input type="password" placeholder="Enter password" required>
-          </div>
-          <div>
-            <div class="label"><label for="password">Comfirm Password</label></div>
-            <input type="password" required>
-          </div>
+    <form action="" id="registerationForm">
+      <label for="firstname">First Name</label>
+      <input type="text" id="firstname" placeholder="Enter First Name">
+      <small id="firstnameError" class="error">First name is required</small>
+
+      <label for="lastname">Last Name</label>
+      <input type="text" id="lastname" placeholder="Enter Last Name">
+      <small id="lastnameError" class="error">Last name is required</small>
+
+      <label for="regno">Registration No</label>
+      <input type="text" id="regno" placeholder="Enter Registeration No">
+      <small id="regError" class="error">Enter a valid Registration No</small>
+
+      <label for="username">Username</label>
+      <input type="text" id="username" placeholder="Enter admin username">
+      <small id="usernameError" class="error">Username is required</small>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="Enter email">
+      <small id="emailError" class="error">Enter a valid email</small>
+      <div class="Names">
+
+        <label for="password">Password</label>
+        <div class="password-container">
+          <input type="password" id="password" placeholder="Enter password">
+          <span onclick="togglePassword()" class="eye">👁️</span>
         </div>
-        <button class="reg-btn ">Register</button>
-      </form>
-    </div>
+        <small id="passwordError" class="error">Password must be at least 6 characters</small>
+
+        <label for="confirmPassword">Confirm Password</label>
+        <div class="password-container">
+          <input type="password" id="confirmPassword" placeholder="Re-enter password">
+          <span onclick="toggleComfirmPassword()" class="eye">👁️</span>
+        </div>
+        <small id="confirmError" class="error">Passwords do not match</small>
+
+        <div class="form-role">
+          <label for="role">Select Role</label>
+          <input type="text" style="width: 40%" id="role" name=" role">
+          <small id="roleError" class="error">Please select a role</small>
+        </div>
+        <div class="btn-container"><button type="submit" class="btn ">Register</button></div>
+         <div class="btn-direction">
+         <p><a href="adminRegisteratin.html">Register as admin</a></p>   
+        </div>
+    </form>
   </div>
 
   <script>
- // Validate email
-    var email = document.getElementById("email");
-    var emailError = document.getElementById("emailError");
 
-    function validateEmail() {
-      var emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,}$/;
-      if (!email.value.match(emailPattern)) {
-        emailError.style.display = "block"; 
-        return false;
+    function togglePassword() {
+      const password = document.getElementById("password");
+      if (password.type === "password") {
+        password.type = "text";
       } else {
-        emailError.style.display = "none"; 
-        return true;
+        password.type = "password";
       }
     }
- // check as the user types
-    email.addEventListener("input", function() {
-      validateEmail();
-    });
+    function toggleComfirmPassword() {
+      const confirmPassword = document.getElementById("confirmPassword");
+      if (confirmPassword.type === "password") {
+        confirmPassword.type = "text";
+      } else {
+        confirmPassword.type = "password";
+      }
+    }
+
+    // element variables
+    const registerationForm = document.getElementById("registerationForm");
+    const fname = document.getElementById("firstname");
+    const lname = document.getElementById("lastname");
+    const regno = document.getElementById("regno");
+    const username = document.getElementById("username");
+    const email = document.getElementById("email");
+    const password = document.getElementById("password");
+    const confirmPassword = document.getElementById("confirmPassword");
+    const role = document.getElementById("role");
+
+    // error variables
+    const firsterror = document.getElementById("firstnameError");
+    const lasterror = document.getElementById("lastnameError");
+    const regnoerror = document.getElementById("regError");
+    const usererror = document.getElementById("usernameError");
+    const emailerror = document.getElementById("emailError");
+    const passworderror = document.getElementById("passwordError");
+    const confirmError = document.getElementById("confirmError");
+    const roleerror = document.getElementById("roleError");
+
+    //form validation
+    registerationForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      let isValid = true;
+
+      // Name validation
+      if (fname.value.trim() === "") {
+        firsterror.style.display = "block";
+        isValid = false;
+      } else {
+        firsterror.style.display = "none"
+      }
+
+
+      if (lname.value.trim() === "") {
+        lasterror.style.display = "block";
+        isValid = false;
+      } else {
+        lasterror.style.display = "none"
+      }
+
+      // regno validation
+      if (regno.value.trim() === "") {
+        regnoerror.style.display = "block";
+        isValid = false;
+      } else {
+        regnoerror.style.display = "none"
+      }
+
+      // username validation
+      if (username.value.trim() === "") {
+        usererror.style.display = "block";
+        isValid = false;
+      } else {
+        usererror.style.display = "none"
+      }
+
+      // email validation
+      let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,}$/;
+      if (!email.value.match(emailPattern)) {
+        emailerror.style.display = "block";
+        isValid = false;
+      } else {
+        emailerror.style.display = "none"
+      }
+
+
+      // password validation
+      if (password.value.length < 6) {
+        passworderror.style.display = "block";
+        isValid = false;
+      } else {
+        passworderror.style.display = "none"
+      }
+
+      if (confirmPassword.value !== password.value || confirmPassword.value === "") {
+        confirmError.style.display = "block";
+        return isValid = false;
+      }
+      else {
+        confirmError.style.display = "none";
+      }
+
+      if (role.value.trim() === "") {
+        roleError.style.display = 'block';
+        isValid = false;
+      } else {
+        roleError.style.display = "none";
+      }
+
+      //  Success Alert
+      if (isValid) {
+        Swal.fire({
+          icon: "Success",
+          title: "Registered",
+          text: "You can now login",
+          timer: 2500,
+          showComfirmButton: true
+        });
+        form.reset();
+      }
+    })
   </script>
+
 </body>
 
 </html>

@@ -1,6 +1,5 @@
 const express = require('express');
 const path = require('path');
-
 const cors = require('cors');
 const app = express();
 app.use(cors());
@@ -28,9 +27,6 @@ app.get('/complaintform', (req, res) => {
 app.get('/registeration', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'registeration.html'));
 });
-app.get('/try', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'try.html'));
-});
 
 
 
@@ -48,34 +44,33 @@ app.get('/api/complaints', (req, res) => {
   });
 });
 
-// Handle admin registration form submission
-app.post('/api/adminRegisteration', (req, res) => {
-  const { username, password, email } = req.body;
-  if (!username || !password || !email) {
+
+// Unified registration for both admin and user
+app.post('/api/register', (req, res) => {
+  const { username, password, email, role } = req.body;
+  if (!username || !password || !email || !role) {
     return res.status(400).json({ error: 'Missing required fields' });
   }
-  db.run('INSERT INTO admins (username, password, email) VALUES (?, ?, ?)', [username, password, email], function(err) {
-    if (err) return res.status(400).json({ error: 'Admin already exists or DB error' });
-    res.json({ message: 'Admin registered successfully', admin: { username, email } });
+  db.get('SELECT * FROM users WHERE email = ?', [email], (err, row) => {
+    if (row) {
+      return res.status(400).json({ error: 'User already registered with this email.' });
+    }
+    db.run('INSERT INTO users (username, password, email, role) VALUES (?, ?, ?, ?)', [username, password, email, role], function(err) {
+      if (err) return res.status(400).json({ error: 'Registration failed.' });
+      res.json({ message: 'User registered successfully', user: { username, email, role } });
+    });
   });
 });
 
 // Login endpoint: checks if user is registered and returns role
 app.post('/api/login', (req, res) => {
-  const { username, password } = req.body;
-  // Check admin
-  db.get('SELECT * FROM admins WHERE (username = ? OR email = ?) AND password = ?', [username, username, password], (err, admin) => {
-    if (admin) {
-      return res.json({ success: true, role: 'admin', username: admin.username });
+  const { email, password } = req.body;
+  db.get('SELECT * FROM users WHERE email = ? AND password = ?', [email, password], (err, user) => {
+    if (user) {
+      // Return the user's role so the frontend can redirect accordingly
+      return res.json({ success: true, role: user.role, username: user.username, email: user.email });
     }
-    // Check user
-    db.get('SELECT * FROM users WHERE (username = ? OR email = ?) AND password = ?', [username, username, password], (err, user) => {
-      if (user) {
-        return res.json({ success: true, role: 'user', username: user.username });
-      }
-      // Not registered
-      return res.json({ success: false });
-    });
+    return res.json({ success: false });
   });
 });
 
@@ -93,17 +88,6 @@ app.post('/api/complaintform', (req, res) => {
     });
 });
 
-// Handle user registration form submission
-app.post('/api/registeration', (req, res) => {
-  const { username, password, email } = req.body;
-  if (!username || !password || !email) {
-    return res.status(400).json({ error: 'Missing required fields' });
-  }
-  db.run('INSERT INTO users (username, password, email, role) VALUES (?, ?, ?, ?)', [username, password, email, 'user'], function(err) {
-    if (err) return res.status(400).json({ error: 'User already exists or DB error' });
-    res.json({ message: 'User registered successfully', user: { username, email } });
-  });
-});
 
 
 app.listen(PORT, () => {

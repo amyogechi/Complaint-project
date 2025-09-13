@@ -58,6 +58,23 @@ app.post('/api/adminRegisteration', (req, res) => {
   res.json({ message: 'Admin registered successfully', admin: { username, email } });
 });
 
+// Login endpoint: checks if user is registered and returns role
+app.post('/api/login', (req, res) => {
+  const { username, password } = req.body;
+  // Check admin
+  const admin = admins.find(a => (a.username === username || a.email === username) && a.password === password);
+  if (admin) {
+    return res.json({ success: true, role: 'admin', username: admin.username });
+  }
+  // Check user
+  const user = users.find(u => (u.username === username || u.email === username) && u.password === password);
+  if (user) {
+    return res.json({ success: true, role: 'user', username: user.username });
+  }
+  // Not registered
+  return res.json({ success: false });
+});
+
 // Handle complaint form submission
 app.post('/api/complaintform', (req, res) => {
   const { name, matric, email, department, title, details, status } = req.body;

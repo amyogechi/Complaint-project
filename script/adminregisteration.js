@@ -93,13 +93,52 @@ form.addEventListener("submit", function (e) {
 
   //  Success Alert
   if (isValid) {
-    Swal.fire({
-      icon: "Success",
-      title: "Admin Registered",
-      text: "You can login as Admin.",
-      timer: 2500,
-      showComfirmButton: true
+    fetch('http://localhost:3001/api/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        username: username.value,
+        password: password.value,
+        email: email.value,
+        role: 'admin'
+      })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.error && data.error.toLowerCase().includes('already registered')) {
+        Swal.fire({
+          icon: "error",
+          title: "Registration Failed",
+          text: "This email is already registered. Please use a different email or login."
+        });
+      } else if (data.user) {
+        Swal.fire({
+          icon: "success",
+          title: "Admin Registered",
+          text: "Registration successful! Redirecting to dashboard...",
+          timer: 2000,
+          showConfirmButton: false
+        }).then(() => {
+          localStorage.setItem('role', data.user.role);
+          localStorage.setItem('username', data.user.username);
+          localStorage.setItem('email', data.user.email);
+          window.location.href = "admindashboard.html";
+        });
+        form.reset();
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Registration Failed",
+          text: "An unknown error occurred."
+        });
+      }
+    })
+    .catch(() => {
+      Swal.fire({
+        icon: "error",
+        title: "Registration Failed",
+        text: "Could not connect to server. Try again."
+      });
     });
-    form.reset();
   }
-})
+});

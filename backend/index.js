@@ -47,17 +47,18 @@ app.get('/api/complaints', (req, res) => {
 
 // Unified registration for both admin and user
 app.post('/api/register', (req, res) => {
-  const { username, password, email, role } = req.body;
-  if (!username || !password || !email || !role) {
+  const { firstname, lastname, regno, username, password, email, role } = req.body;
+  if (!firstname || !lastname || !regno || !username || !password || !email || !role) {
     return res.status(400).json({ error: 'Missing required fields' });
   }
   db.get('SELECT * FROM users WHERE email = ?', [email], (err, row) => {
     if (row) {
       return res.status(400).json({ error: 'User already registered with this email.' });
     }
-    db.run('INSERT INTO users (username, password, email, role) VALUES (?, ?, ?, ?)', [username, password, email, role], function(err) {
+    db.run('INSERT INTO users (firstname, lastname, regno, username, password, email, role) VALUES (?, ?, ?, ?, ?, ?, ?)',
+      [firstname, lastname, regno, username, password, email, role], function(err) {
       if (err) return res.status(400).json({ error: 'Registration failed.' });
-      res.json({ message: 'User registered successfully', user: { username, email, role } });
+      res.json({ message: 'User registered successfully', user: { firstname, lastname, regno, username, email, role } });
     });
   });
 });

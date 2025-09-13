@@ -8,16 +8,19 @@ document.addEventListener('DOMContentLoaded', function() {
         function renderComplaints(complaints) {
             tbody.innerHTML = '';
             if (complaints.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#888;">No complaints found.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#888;">No complaints found.</td></tr>';
                 return;
             }
             complaints.forEach(c => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td>${c.id || ''}</td>
-                    <td>${c.user || c.email || ''}</td>
+                    <td>${c.name || ''}</td>
+                    <td>${c.matric || ''}</td>
+                    <td>${c.email || ''}</td>
+                    <td>${c.department || ''}</td>
                     <td>${c.title || ''}</td>
-                    <td>${c.description || c.details || ''}</td>
+                    <td>${c.details || ''}</td>
                     <td>${c.status || 'Pending'}</td>
                     <td>
                         <button class="status-btn" ${c.status === 'Resolved' ? 'disabled' : ''} data-id="${c.id}">${c.status === 'Resolved' ? 'Resolved' : 'Mark as Resolved'}</button>

@@ -41,6 +41,7 @@ function togglePassword() {
     e.preventDefault();
     let isValid = true;
 
+    // ...existing validation code...
     // Name validation
     if (fname.value.trim() === "") {
       firsterror.style.display = "block";
@@ -48,32 +49,24 @@ function togglePassword() {
     } else {
       firsterror.style.display = "none"
     }
-
-
     if (lname.value.trim() === "") {
       lasterror.style.display = "block";
       isValid = false;
     } else {
       lasterror.style.display = "none"
     }
-
-    // regno validation
     if (regno.value.trim() === "") {
       regnoerror.style.display = "block";
       isValid = false;
     } else {
       regnoerror.style.display = "none"
     }
-
-    // username validation
     if (username.value.trim() === "") {
       usererror.style.display = "block";
       isValid = false;
     } else {
       usererror.style.display = "none"
     }
-
-    // email validation
     let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,}$/;
     if (!email.value.match(emailPattern)) {
       emailerror.style.display = "block";
@@ -81,16 +74,12 @@ function togglePassword() {
     } else {
       emailerror.style.display = "none"
     }
-
-
-    // password validation
     if (password.value.length < 6) {
       passworderror.style.display = "block";
       isValid = false;
     } else {
       passworderror.style.display = "none"
     }
-
     if (confirmPassword.value !== password.value || confirmPassword.value === "") {
       confirmError.style.display = "block";
       return isValid = false;
@@ -98,7 +87,6 @@ function togglePassword() {
     else {
       confirmError.style.display = "none";
     }
-
     if (role.value.trim() === "") {
       roleError.style.display = 'block';
       isValid = false;
@@ -106,19 +94,64 @@ function togglePassword() {
       roleError.style.display = "none";
     }
 
-    //  Success Alert
     if (isValid) {
-      Swal.fire({
-        icon: "success",
-        title: "Registered",
-        text: "Registration successful! Redirecting...",
-        timer: 2000,
-        showConfirmButton: false
-      }).then(() => {
-        // Store role for later use (optional)
-        localStorage.setItem('role', role.value);
-        window.location.href = "complaintform.html";
+      // Send registration to backend
+      fetch('http://localhost:3001/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstname: fname.value,
+          lastname: lname.value,
+          regno: regno.value,
+          username: username.value,
+          password: password.value,
+          email: email.value,
+          role: role.value
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.error && data.error.toLowerCase().includes('already registered')) {
+          Swal.fire({
+            icon: "error",
+            title: "Registration Failed",
+            text: "This email is already registered. Please use a different email or login."
+          });
+        } else if (data.user) {
+          Swal.fire({
+            icon: "success",
+            title: "Registered",
+            text: "Registration successful! Redirecting...",
+            timer: 2000,
+            showConfirmButton: false
+          }).then(() => {
+            localStorage.setItem('role', data.user.role);
+            localStorage.setItem('username', data.user.username);
+            localStorage.setItem('email', data.user.email);
+            localStorage.setItem('firstname', data.user.firstname);
+            localStorage.setItem('lastname', data.user.lastname);
+            localStorage.setItem('regno', data.user.regno);
+            if (data.user.role.toLowerCase() === 'admin') {
+              window.location.href = "admindashboard.html";
+            } else {
+              window.location.href = "complaintform.html";
+            }
+          });
+          registerationForm.reset();
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Registration Failed",
+            text: "An unknown error occurred."
+          });
+        }
+      })
+      .catch(() => {
+        Swal.fire({
+          icon: "error",
+          title: "Registration Failed",
+          text: "Could not connect to server. Try again."
+        });
       });
-      form.reset();
     }
-  })
+  });

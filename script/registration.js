@@ -109,11 +109,15 @@ function togglePassword() {
     //  Success Alert
     if (isValid) {
       Swal.fire({
-        icon: "Success",
+        icon: "success",
         title: "Registered",
-        text: "You can now login",
-        timer: 2500,
-        showComfirmButton: true
+        text: "Registration successful! Redirecting...",
+        timer: 2000,
+        showConfirmButton: false
+      }).then(() => {
+        // Store role for later use (optional)
+        localStorage.setItem('role', role.value);
+        window.location.href = "complaintform.html";
       });
       form.reset();
     }

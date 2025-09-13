@@ -13,16 +13,16 @@
     <h4>LOGIN</h4>
    <div class="form-container" >
     <form action="" >
-      <div class="label"><label for="name">Username/Email</label></div>
+      <div class="label"><label for="login-username">Username/Email</label></div>
       <div>
-        <input type="text" placeholder="Username" required>
+        <input type="text" id="login-username" placeholder="Username" required>
       </div>
       <div class="label"><label for="password">Password</label></div>
       <div class="password-container">
         <input type="password" placeholder="password" id="password" required>
         <span onclick="togglePassword()" style="cursor:pointer;">👁️</span>
       </div>
-     <a href="complaintform.html"><button class="sub-btn" onclick="loginSuccess()">SUBMIT</button></a>
+      <button class="sub-btn" type="submit">SUBMIT</button>
       <div><p>Not registered? <a href="registeration.html">Register</a></p></div>
     </form>
    </div>

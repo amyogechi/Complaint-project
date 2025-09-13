@@ -91,7 +91,6 @@
     // On form submit
     form.addEventListener("submit", function (e) {
       e.preventDefault();
-
       // Run all validations
       var isValid =
         validateName() &&
@@ -102,17 +101,44 @@
         validateDetails();
 
       if (isValid) {
-        Swal.fire({
-          icon: "success",
-          title: "Complaint Submitted",
-          text: "Thank you! Your complaint has been recorded.",
-          timer: 2500,
-          showConfirmButton: false
+        // Prepare complaint data
+        const complaintData = {
+          name: nameField.value,
+          matric: matricField.value,
+          email: emailField.value,
+          department: deptField.value,
+          title: titleField.value,
+          details: detailsField.value,
+          status: 'Pending'
+        };
+        // Save email to localStorage for user identification
+        localStorage.setItem('email', emailField.value);
+        // Send to backend
+        fetch('http://localhost:3001/api/complaintform', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(complaintData)
+        })
+        .then(res => res.json())
+        .then(data => {
+          Swal.fire({
+            icon: "success",
+            title: "Complaint Submitted",
+            text: "Thank you! Your complaint has been recorded.",
+            timer: 2500,
+            showConfirmButton: false
+          });
+          form.reset();
+          loadMyComplaints();
+        })
+        .catch(() => {
+          Swal.fire({
+            icon: "error",
+            title: "Submission Failed",
+            text: "Could not submit complaint. Try again."
+          });
         });
-
-        form.reset(); // clear fields
-      }
-      else {
+      } else {
         Swal.fire({
           icon: "error",
           title: "Form Incomplete",
@@ -120,3 +146,34 @@
         });
       }
     });
+
+    // Load user's complaints
+    function loadMyComplaints() {
+      const email = localStorage.getItem('email');
+      if (!email) return;
+      fetch('http://localhost:3001/api/complaints')
+        .then(res => res.json())
+        .then(complaints => {
+          const myComplaints = complaints.filter(c => c.email === email);
+          const tbody = document.querySelector('#myComplaintsTable tbody');
+          const noMsg = document.getElementById('noComplaintsMsg');
+          tbody.innerHTML = '';
+          if (myComplaints.length === 0) {
+            noMsg.textContent = 'No complaints submitted yet.';
+            return;
+          }
+          noMsg.textContent = '';
+          myComplaints.forEach(c => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+              <td style="padding:0.5rem; border:1px solid #eee;">${c.title}</td>
+              <td style="padding:0.5rem; border:1px solid #eee;">${c.details}</td>
+              <td style="padding:0.5rem; border:1px solid #eee;">${c.status || 'Pending'}</td>
+            `;
+            tbody.appendChild(tr);
+          });
+        });
+    }
+
+    // Load on page ready
+  loadMyComplaints();

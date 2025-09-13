@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login complaints System</title>
+<<<<<<< HEAD
   <style>
     body {
       background-color: white;
@@ -119,6 +120,9 @@
       display: none;
     }
   </style>
+=======
+  <link rel="stylesheet" href="./styles/index.css">
+>>>>>>> da6012625e056b1ba4af9b95b7d7a02de60a5e7e
 </head>
 
 <body>
@@ -126,6 +130,7 @@
     <div class="logo"><span><img src="images/download.jpeg" alt="NACOSLogo"></span></div>
     <header><span class="header">NACOS Complaint Management system</span></header>
     <h4>LOGIN</h4>
+<<<<<<< HEAD
     <div class="form-container">
       <form action="" id="loginform">
         <div class="label"><label for="name">Username/Email</label></div>
@@ -199,6 +204,26 @@ let password = document.getElementById("password");
 
 
   </script>
+=======
+   <div class="form-container" >
+    <form action="" >
+      <div class="label"><label for="login-username">Username/Email</label></div>
+      <div>
+        <input type="text" id="login-username" placeholder="Username" required>
+      </div>
+      <div class="label"><label for="password">Password</label></div>
+      <div class="password-container">
+        <input type="password" placeholder="password" id="password" required>
+        <span onclick="togglePassword()" style="cursor:pointer;">👁️</span>
+      </div>
+      <button class="sub-btn" type="submit">SUBMIT</button>
+      <div><p>Not registered? <a href="registeration.html">Register</a></p></div>
+    </form>
+   </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
+  <script src="/script/index.js"></script>
+>>>>>>> da6012625e056b1ba4af9b95b7d7a02de60a5e7e
 
 </body>
 

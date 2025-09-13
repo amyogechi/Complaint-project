@@ -1,16 +1,210 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login complaints System</title>
+<<<<<<< HEAD
+  <style>
+    body {
+      background-color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      background-color: white;
+      box-shadow: 0.2px 0.5px 1px 1px gray;
+      margin-top: 70px;
+      width: 39%;
+      height: 480px;
+      color: black;
+      border-radius: 10px;
+    }
+
+    .logo {
+      margin-top: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo img {
+      border-radius: 50%;
+      width: 70px;
+      height: 70px;
+    }
+
+    header {
+      margin: 20px 10px;
+      display: block;
+      text-align: center;
+    }
+
+    .header {
+      font-size: 23px;
+      font-weight: bold;
+    }
+
+    h4 {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 10px;
+      font-size: 17px;
+      font-weight: lighter;
+    }
+
+    .form-container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .label {
+      font-size: 16px;
+      font-weight: bolder;
+      align-items: baseline;
+    }
+
+    .form-container input {
+      width: 400px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      margin-top: 7px;
+      border: 0.1px solid hsla(0, 0%, 50%, 0.338);
+      /* background-color: hsla(120, 93%, 79%, 0.086); */
+      padding: 6px;
+      height: 25px;
+    }
+
+    .form-container p {
+      margin-top: 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 15px;
+    }
+
+    .form-container p a {
+      text-decoration: none;
+      color: green;
+    }
+
+    .password-container {
+      position: relative;
+    }
+
+    .password-container span {
+      position: absolute;
+      right: 10px;
+      top: 40%;
+      transform: translateY(-50%);
+      cursor: pointer;
+    }
+
+    .sub-btn {
+      width: 80px;
+      height: 30px;
+      background-color: green;
+      color: white;
+      border-radius: 5px;
+      border: none;
+    }
+     .error {
+      color: red;
+      font-size: 12px;
+      display: none;
+    }
+  </style>
+=======
   <link rel="stylesheet" href="./styles/index.css">
+>>>>>>> da6012625e056b1ba4af9b95b7d7a02de60a5e7e
 </head>
+
 <body>
   <div class="container">
-    <div class="logo"><span ><img src="images/download.jpeg"  alt="NACOSLogo"></span></div>
+    <div class="logo"><span><img src="images/download.jpeg" alt="NACOSLogo"></span></div>
     <header><span class="header">NACOS Complaint Management system</span></header>
     <h4>LOGIN</h4>
+<<<<<<< HEAD
+    <div class="form-container">
+      <form action="" id="loginform">
+        <div class="label"><label for="name">Username/Email</label></div>
+        <div>
+          <input type="text" id="username" placeholder="Username" >
+          <small id="usernameError" class="error">Username is required</small>
+        </div>
+        <div class="label"><label for="password">Password</label></div>
+        <div class="password-container">
+          <input type="password" placeholder="password" id="password" >
+          <span onclick="togglePassword()" style="cursor:pointer;">👁️</span>
+        </div>
+        <small id="passError" class="error">password is required</small>
+        <button type="submit" class="sub-btn">SUBMIT</button>
+        <div>
+          <p>Not registered? <a href="registeration.html">Register</a></p>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    
+    function togglePassword() {
+      let password = document.getElementById("password");
+      if (password.type === "password") {
+        password.type = "text";
+      } else {
+        password.type = "password";
+      }
+    }
+
+let password = document.getElementById("password");
+    let username = document.getElementById("username");
+    let usererror = document.getElementById("usererror");
+    let passError = document.getElementById("passError");
+    const login = document.getElementById('loginform')
+
+    login.addEventListener("submit", function (e) {
+       e.preventDefault();
+      let isValid = true
+      if (username.value.trim() === "") {
+        usererror.style.display = 'block';
+        isValid = false;
+      } else {
+        usererror.style.display = 'none'
+      }
+
+       if (password.value.length < 6) {
+        passError.style.display = "block";
+        isValid = false;
+      } else {
+        passError.style.display = "none"
+      }
+
+
+
+      //  SweetAlert success popup
+      Swal.fire({
+        icon: "success",
+        title: "Login Successful",
+        text: "Redirecting to your Complaint Form...",
+        timer: 2000,
+        showConfirmButton: false
+      }).then(() => {
+        window.location.href = "complaintform.html";
+      });
+    })
+
+
+
+  </script>
+=======
    <div class="form-container" >
     <form action="" >
       <div class="label"><label for="login-username">Username/Email</label></div>
@@ -29,5 +223,11 @@
   </div>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
   <script src="/script/index.js"></script>
+<<<<<<< HEAD
+=======
+>>>>>>> da6012625e056b1ba4af9b95b7d7a02de60a5e7e
+
+>>>>>>> 7240b46fe5de2f5ff4326b3ecd252b43b49aab10
 </body>
-</html> 
+
+</html>

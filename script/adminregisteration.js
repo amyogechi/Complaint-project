@@ -93,25 +93,24 @@ form.addEventListener("submit", function (e) {
 
   //  Success Alert
   if (isValid) {
-    fetch('/api/register', {
+    fetch('http://localhost:3001/api/adminRegisteration', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         username: username.value,
         password: password.value,
-        email: email.value,
-        role: 'admin'
+        email: email.value
       })
     })
     .then(res => res.json())
     .then(data => {
-      if (data.error && data.error.toLowerCase().includes('already registered')) {
+      if (data.error && data.error.includes('already registered')) {
         Swal.fire({
           icon: "error",
           title: "Registration Failed",
-          text: "This email is already registered. Please use a different email or login."
+          text: data.error
         });
-      } else if (data.user) {
+      } else {
         Swal.fire({
           icon: "success",
           title: "Admin Registered",
@@ -119,18 +118,9 @@ form.addEventListener("submit", function (e) {
           timer: 2000,
           showConfirmButton: false
         }).then(() => {
-          localStorage.setItem('role', data.user.role);
-          localStorage.setItem('username', data.user.username);
-          localStorage.setItem('email', data.user.email);
           window.location.href = "admindashboard.html";
         });
         form.reset();
-      } else {
-        Swal.fire({
-          icon: "error",
-          title: "Registration Failed",
-          text: "An unknown error occurred."
-        });
       }
     })
     .catch(() => {

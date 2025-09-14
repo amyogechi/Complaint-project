@@ -6,9 +6,6 @@ db.serialize(() => {
   // Users table
   db.run(`CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    firstname TEXT,
-    lastname TEXT,
-    regno TEXT,
     username TEXT UNIQUE,
     email TEXT UNIQUE,
     password TEXT,

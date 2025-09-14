@@ -96,28 +96,24 @@ function togglePassword() {
 
     if (isValid) {
       // Send registration to backend
-      fetch('/api/register', {
+      fetch('http://localhost:3001/api/registeration', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          firstname: fname.value,
-          lastname: lname.value,
-          regno: regno.value,
           username: username.value,
           password: password.value,
-          email: email.value,
-          role: role.value
+          email: email.value
         })
       })
       .then(res => res.json())
       .then(data => {
-        if (data.error && data.error.toLowerCase().includes('already registered')) {
+        if (data.error && data.error.includes('already registered')) {
           Swal.fire({
             icon: "error",
             title: "Registration Failed",
-            text: "This email is already registered. Please use a different email or login."
+            text: data.error
           });
-        } else if (data.user) {
+        } else {
           Swal.fire({
             icon: "success",
             title: "Registered",
@@ -125,25 +121,14 @@ function togglePassword() {
             timer: 2000,
             showConfirmButton: false
           }).then(() => {
-            localStorage.setItem('role', data.user.role);
-            localStorage.setItem('username', data.user.username);
-            localStorage.setItem('email', data.user.email);
-            localStorage.setItem('firstname', data.user.firstname);
-            localStorage.setItem('lastname', data.user.lastname);
-            localStorage.setItem('regno', data.user.regno);
-            if (data.user.role.toLowerCase() === 'admin') {
+            localStorage.setItem('role', role.value);
+            if (role.value.toLowerCase() === 'admin') {
               window.location.href = "admindashboard.html";
             } else {
               window.location.href = "complaintform.html";
             }
           });
-          registerationForm.reset();
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "Registration Failed",
-            text: "An unknown error occurred."
-          });
+          form.reset();
         }
       })
       .catch(() => {

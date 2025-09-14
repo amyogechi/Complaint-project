@@ -10,7 +10,7 @@ function togglePassword() {
 function loginSuccess() {
   const email = document.getElementById('login-username').value;
   const password = document.getElementById('password').value;
-  fetch('http://localhost:3001/api/login', {
+  fetch('/api/login', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email, password })

@@ -93,7 +93,7 @@ form.addEventListener("submit", function (e) {
 
   //  Success Alert
   if (isValid) {
-    fetch('http://localhost:3001/api/register', {
+    fetch('/api/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

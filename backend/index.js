@@ -7,29 +7,26 @@ const PORT = process.env.PORT || 3001;
 
 app.use(express.json());
 
-// Serve static files from the main Complaint-project folder (frontend)
-app.use(express.static(path.join(__dirname, 'public')));
+// Serve static files from the frontend build folder
+app.use(express.static(path.join(__dirname, '..', 'frontend', 'public')));
 
 
 // Serve main pages
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+app.get('/', (_, res) => {
+  res.sendFile(path.join(__dirname, '..', 'frontend', 'public', 'index.html'));
 });
-app.get('/admindashboard', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'admindashboard.html'));
+app.get('/admindashboard', (_, res) => {
+  res.sendFile(path.join(__dirname, '..', 'frontend', 'public', 'admindashboard.html'));
 });
-app.get('/adminRegisteration', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'adminRegisteration.html'));
+app.get('/adminRegisteration', (_, res) => {
+  res.sendFile(path.join(__dirname, '..', 'frontend', 'public', 'adminRegisteration.html'));
 });
-app.get('/complaintform', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'complaintform.html'));
+app.get('/complaintform', (_, res) => {
+  res.sendFile(path.join(__dirname, '..', 'frontend', 'public', 'complaintform.html'));
 });
-app.get('/registeration', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'registeration.html'));
+app.get('/registeration', (_, res) => {
+  res.sendFile(path.join(__dirname, '..', 'frontend', 'public', 'registeration.html'));
 });
-
-
-
 
 
 // Use SQLite database
@@ -38,7 +35,7 @@ const db = require('./db');
 // Handle admin dashboard actions (e.g., get all complaints)
 
 // GET all complaints for admin dashboard
-app.get('/api/complaints', (req, res) => {
+app.get('/api/complaints', (_, res) => {
   db.all('SELECT * FROM complaints', [], (err, rows) => {
     if (err) return res.status(500).json({ error: 'DB error' });
     res.json(rows);
@@ -52,12 +49,12 @@ app.post('/api/adminRegisteration', (req, res) => {
     return res.status(400).json({ error: 'Missing required fields' });
   }
   // Check if email exists in users
-  db.get('SELECT * FROM users WHERE email = ?', [email], (err, userRow) => {
+  db.get('SELECT * FROM users WHERE email = ?', [email], (_, userRow) => {
     if (userRow) {
       return res.status(400).json({ error: 'Email is already registered as a student.' });
     }
     // Check if email or username exists in admins
-    db.get('SELECT * FROM admins WHERE username = ? OR email = ?', [username, email], (err, adminRow) => {
+    db.get('SELECT * FROM admins WHERE username = ? OR email = ?', [username, email], (_, adminRow) => {
       if (adminRow) {
         return res.status(400).json({ error: 'Email or username is already registered as an admin.' });
       }
@@ -73,12 +70,12 @@ app.post('/api/adminRegisteration', (req, res) => {
 app.post('/api/login', (req, res) => {
   const { username, password } = req.body;
   // Check admin
-  db.get('SELECT * FROM admins WHERE (username = ? OR email = ?) AND password = ?', [username, username, password], (err, admin) => {
+  db.get('SELECT * FROM admins WHERE (username = ? OR email = ?) AND password = ?', [username, username, password], (_, admin) => {
     if (admin) {
       return res.json({ success: true, role: 'admin', username: admin.username });
     }
     // Check user
-    db.get('SELECT * FROM users WHERE (username = ? OR email = ?) AND password = ?', [username, username, password], (err, user) => {
+    db.get('SELECT * FROM users WHERE (username = ? OR email = ?) AND password = ?', [username, username, password], (_, user) => {
       if (user) {
         return res.json({ success: true, role: 'user', username: user.username });
       }
@@ -109,12 +106,12 @@ app.post('/api/registeration', (req, res) => {
     return res.status(400).json({ error: 'Missing required fields' });
   }
   // Check if email exists in admins
-  db.get('SELECT * FROM admins WHERE email = ?', [email], (err, adminRow) => {
+  db.get('SELECT * FROM admins WHERE email = ?', [email], (_, adminRow) => {
     if (adminRow) {
       return res.status(400).json({ error: 'Email is already registered as an admin.' });
     }
     // Check if email or username exists in users
-    db.get('SELECT * FROM users WHERE username = ? OR email = ?', [username, email], (err, userRow) => {
+    db.get('SELECT * FROM users WHERE username = ? OR email = ?', [username, email], (_, userRow) => {
       if (userRow) {
         return res.status(400).json({ error: 'Email or username is already registered as a student.' });
       }

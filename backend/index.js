@@ -13,23 +13,21 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Serve main pages
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'index.html'));
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 app.get('/admindashboard', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'admindashboard.html'));
+  res.sendFile(path.join(__dirname, 'public', 'admindashboard.html'));
 });
 app.get('/adminRegisteration', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'adminRegisteration.html'));
+  res.sendFile(path.join(__dirname, 'public', 'adminRegisteration.html'));
 });
 app.get('/complaintform', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'complaintform.html'));
+  res.sendFile(path.join(__dirname, 'public', 'complaintform.html'));
 });
 app.get('/registeration', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'registeration.html'));
+  res.sendFile(path.join(__dirname, 'public', 'registeration.html'));
 });
-app.get('/try', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'try.html'));
-});
+
 
 
 

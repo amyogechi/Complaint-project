@@ -9,7 +9,7 @@ function togglePassword() {
 
 // SweetAlert success popup and login logic
 function loginSuccess() {
-  // Get username and password from form
+  // Get username and password from backend
   const username = document.getElementById('login-username').value;
   const password = document.getElementById('password').value;
   fetch("/api/login", {

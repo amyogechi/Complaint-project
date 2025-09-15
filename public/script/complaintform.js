@@ -114,7 +114,7 @@
         // Save email to localStorage for user identification
         localStorage.setItem('email', emailField.value);
         // Send to backend
-        fetch('https://localhost:3001/api/complaintform', {
+        fetch("/api/complaintform", {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(complaintData)
